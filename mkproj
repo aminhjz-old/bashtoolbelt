@@ -1,0 +1,3 @@
+#!/bin/bash 
+mkdir -p `pwd`/$1/{_sandbox,_archive,_repo}
+
