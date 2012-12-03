@@ -1,0 +1,33 @@
+#!/bin/bash
+function build(){
+	echo "************************** building $FOLDER ************************** ";
+	FOLDER=$1
+
+	echo "Changing directory to $FOLDER"
+	cd $FOLDER
+	./configure --enable-debug	
+	RETVAL=$?
+	[ $RETVAL -ne 0 ] && exit 1
+	
+
+	echo "Cleaning $FOLDER ..."
+	make clean
+	RETVAL=$?
+	[ $RETVAL -ne 0 ] && exit 1
+	
+	echo "Making $FOLDER ..."
+	make
+	RETVAL=$?
+	[ $RETVAL -ne 0 ] && exit 1
+	
+	echo "Installing $FOLDER ..."
+	sudo make install
+	RETVAL=$?
+	[ $RETVAL -ne 0 ] && exit 1
+
+	cd ..
+}
+
+for FOLDER in $(ls);do	
+	build $FOLDER
+done
